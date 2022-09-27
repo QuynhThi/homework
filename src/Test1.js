@@ -1,55 +1,64 @@
 import React, { useEffect } from "react";
-import useDispatch, { GetList } from "./useDispatch";
+import {
+  AddListMember,
+  GetDetailMember,
+  GetListMember,
+  SelectDetailMember,
+  SelectListMember,
+} from "./memberStore";
+import useDispatch from "./useDispatch";
 import useSlector from "./useSelector";
 
 const Test1 = () => {
   let dispatch = useDispatch();
-  let list = useSlector("SELECT_LIST") || [];
+  let listMember = useSlector(SelectListMember) || [];
+  let detailMember = useSlector(SelectDetailMember) || {};
 
   useEffect(() => {
-    dispatch("GET_LIST");
-
-    return () => {
-      dispatch("REMOVE_LIST");
-    };
+    dispatch(GetListMember());
   }, []);
 
   const addItem = () => {
-    dispatch("ADD_LIST");
+    dispatch(AddListMember());
   };
 
   return (
-    <div style={{ margin: "100px", display: "flex" }}>
-      {list.map((item, index) => {
-        return (
-          <div
-            style={{
-              width: "100px",
-              textAlign: "center",
-              border: "1px solid #333",
-              marginRight: "10px",
-            }}
-            key={index}
-          >
-            <p style={{ marginY: "5px" }}>{item?.name}</p>
-          </div>
-        );
-      })}
+    <>
+      <p>Detail Member: {detailMember?.name}</p>
+      <div style={{ margin: "100px", display: "flex" }}>
+        {listMember?.map((item, index) => {
+          return (
+            <div
+              style={{
+                width: "100px",
+                textAlign: "center",
+                border: "1px solid #333",
+                marginRight: "10px",
+                cursor: "pointer",
+              }}
+              key={index}
+              onClick={() => dispatch(GetDetailMember(item))}
+            >
+              <p style={{ marginY: "5px" }}>{item?.name}</p>
+            </div>
+          );
+        })}
 
-      <div
-        style={{
-          width: "100px",
-          textAlign: "center",
-          border: "1px solid #333",
-          marginRight: "10px",
-          cursor: "pointer",
-        }}
-      >
-        <p style={{ marginY: "5px" }} onClick={addItem}>
-          Add
-        </p>
+        <div
+          style={{
+            width: "100px",
+            textAlign: "center",
+            border: "1px solid #333",
+            marginRight: "10px",
+            cursor: "pointer",
+          }}
+        >
+          <p style={{ marginY: "5px" }} onClick={addItem}>
+            Add Member
+          </p>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

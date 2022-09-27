@@ -1,36 +1,23 @@
 import { useEffect, useState } from "react";
+import _ from "lodash";
 
-let list = undefined;
-let statusList = "pending";
-
-export const ReducerGetList = (data) => {
-  list = data;
-  statusList = "done";
-};
-
-function useSlector(key) {
-  const [listState, setListState] = useState(list);
-  const [statusListState, setStatusListState] = useState(statusList);
-
-  const SelectList = () => {
-    setListState(list);
-    setStatusListState("done");
-    return listState;
-  };
+function useSlector(obj) {
+  const [data, setData] = useState(obj());
 
   useEffect(() => {
     let myInterval = setInterval(function () {
-      if (list?.length > 0 && key === "SELECT_LIST" && statusList === "done") {
-        SelectList();
+      let newData = obj();
+      if (JSON.stringify(data) !== JSON.stringify(newData)) {
+        setData(newData);
       }
     }, 500);
 
     return () => {
       clearInterval(myInterval);
     };
-  }, []);
+  }, [data]);
 
-  return listState;
+  return data;
 }
 
 export default useSlector;
