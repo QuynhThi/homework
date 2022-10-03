@@ -1,29 +1,5 @@
 import React, { useCallback, useEffect } from "react";
-// import { abc } from "./redux/membersActions";
 import { useDispatch, useSelector, useStore } from "./redux/store";
-import { addMember, fetchMembers } from "./useDispatch";
-
-const Test1List = () => {
-  // {
-  //   listMember &&
-  //     listMember.map((item, index) => {
-  //       return (
-  //         <div
-  //           style={{
-  //             width: "100px",
-  //             textAlign: "center",
-  //             border: "1px solid #333",
-  //             marginRight: "10px",
-  //             cursor: "pointer",
-  //           }}
-  //           key={index}
-  //         >
-  //           <p style={{ marginY: "5px" }}>{item?.name}</p>
-  //         </div>
-  //       );
-  //     });
-  // }
-};
 
 const Test1 = () => {
   // const { state, dispatch } = useStore();
@@ -37,8 +13,6 @@ const Test1 = () => {
   //   () => dispatch({ type: "ADD_MEMBER" }),
   //   [dispatch]
   // );
-
-  console.log("listMember", listMember);
 
   // const listMember = state.members.list;
 
