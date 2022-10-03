@@ -1,48 +1,77 @@
-import React, { useEffect } from "react";
-import {
-  AddListMember,
-  GetDetailMember,
-  GetListMember,
-  SelectDetailMember,
-  SelectListMember,
-} from "./memberStore";
-import useDispatch from "./useDispatch";
-import useSlector from "./useSelector";
+import React, { useCallback, useEffect } from "react";
+// import { abc } from "./redux/membersActions";
+import { useDispatch, useSelector, useStore } from "./redux/store";
+import { addMember, fetchMembers } from "./useDispatch";
+
+const Test1List = () => {
+  // {
+  //   listMember &&
+  //     listMember.map((item, index) => {
+  //       return (
+  //         <div
+  //           style={{
+  //             width: "100px",
+  //             textAlign: "center",
+  //             border: "1px solid #333",
+  //             marginRight: "10px",
+  //             cursor: "pointer",
+  //           }}
+  //           key={index}
+  //         >
+  //           <p style={{ marginY: "5px" }}>{item?.name}</p>
+  //         </div>
+  //       );
+  //     });
+  // }
+};
 
 const Test1 = () => {
+  // const { state, dispatch } = useStore();
+  let listMember = useSelector((state) => state?.members?.list);
   let dispatch = useDispatch();
-  let listMember = useSlector(SelectListMember) || [];
-  let detailMember = useSlector(SelectDetailMember) || {};
+  // const fetchListMember = useCallback(
+  //   () => dispatch({ type: "FETCH_MEMBERS" }),
+  //   [dispatch]
+  // );
+  // const addMember = useCallback(
+  //   () => dispatch({ type: "ADD_MEMBER" }),
+  //   [dispatch]
+  // );
+
+  console.log("listMember", listMember);
+
+  // const listMember = state.members.list;
 
   useEffect(() => {
-    dispatch(GetListMember());
+    // fetchListMember();
+    // dispatch1(fetchListMember());
+    // dispatch1(fetchMembers());
   }, []);
 
-  const addItem = () => {
-    dispatch(AddListMember());
+  const addMemberFunc = () => {
+    dispatch({ type: "ADD_MEMBER" });
   };
 
   return (
     <>
-      <p>Detail Member: {detailMember?.name}</p>
       <div style={{ margin: "100px", display: "flex" }}>
-        {listMember?.map((item, index) => {
-          return (
-            <div
-              style={{
-                width: "100px",
-                textAlign: "center",
-                border: "1px solid #333",
-                marginRight: "10px",
-                cursor: "pointer",
-              }}
-              key={index}
-              onClick={() => dispatch(GetDetailMember(item))}
-            >
-              <p style={{ marginY: "5px" }}>{item?.name}</p>
-            </div>
-          );
-        })}
+        {listMember &&
+          listMember.map((item, index) => {
+            return (
+              <div
+                style={{
+                  width: "100px",
+                  textAlign: "center",
+                  border: "1px solid #333",
+                  marginRight: "10px",
+                  cursor: "pointer",
+                }}
+                key={index}
+              >
+                <p style={{ marginY: "5px" }}>{item?.name}</p>
+              </div>
+            );
+          })}
 
         <div
           style={{
@@ -53,7 +82,7 @@ const Test1 = () => {
             cursor: "pointer",
           }}
         >
-          <p style={{ marginY: "5px" }} onClick={addItem}>
+          <p style={{ marginY: "5px" }} onClick={addMemberFunc}>
             Add Member
           </p>
         </div>
